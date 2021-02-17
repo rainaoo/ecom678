@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 class AdminTableSeeder extends Seeder
 {
     /**
@@ -15,17 +16,21 @@ class AdminTableSeeder extends Seeder
         DB::table('admins')->delete();
         $adminRecords=[
             [ 'id'=>1,'name'=>'admin','type'=>'admin','mobile'=>'12345','email'=>'admin@admin.com',
-            'password'=>'$2y$10$U2eVpn0hSXNC3DZmC9vn8uMwb6OH31AVA6lT9xt8zaUCX/upFk.kq
-            ','image'=>'','status' =>1 ],
+            'password'=>Hash::make('000')
+            ,'image'=>'','status' =>1 ],
 
             [ 'id'=>2,'name'=>'admin','type'=>'admin','mobile'=>'12345','email'=>'admin@a.com',
-            'password'=>'$2y$10$U2eVpn0hSXNC3DZmC9vn8uMwb6OH31AVA6lT9xt8zaUCX/upFk.kq
-            ','image'=>'','status' =>1 ],
+            'password'=>Hash::make('123')
+            ,'image'=>'','status' =>1 ],
 
 
             [ 'id'=>3,'name'=>'raina','type'=>'admin','mobile'=>'12345','email'=>'raina@admin.com',
-            'password'=>'$2y$10$XIZ3cYICTvHJr/G0zlZKn.lOTDRrzqCK5dli2geyjvNfC23gm4KOy
-            ','image'=>'','status' =>1 ],
+            'password'=>Hash::make('000')
+            ,'image'=>'','status' =>1 ],
+
+            [ 'id'=>4,'name'=>'raina','type'=>'admin','mobile'=>'12345','email'=>'raina000@admin.com',
+            'password'=>Hash::make('000')
+            ,'image'=>'','status' =>1 ],
         ];
 
 

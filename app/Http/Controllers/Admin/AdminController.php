@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Auth;
+//use Illuminate\Support\Facades\Auth;
+//use Symfony\Component\HttpFoundation\Session\Session;
 use Session;
 use App\Admin;
 //use Illuminate\Contracts\Session;
@@ -27,8 +29,18 @@ class AdminController extends Controller
     public function login(Request $request){
        // echo $password=Hash::make(123);
        if ($request->isMethod('post')){
-           $data=$request->only('email', 'password');
-          /* echo "<pre>";print_r($data);*/
+           //$data=$request->only('email', 'password');
+           $data=$request->all();
+
+          echo "<pre>";print_r($data);
+          if(Auth::guard('admin')->attempt(['email'=>$data['email'],'password'=>$data['password']])){
+            return redirect('admin/dashboard');
+           
+        }else{
+           Session::flash('error_message','invalid Email or Password');
+            return redirect()->back();
+           // echo "<pre>";print_r($data[Hash::make('password')]);
+            }
 
          /* $validatedData = $request->validate([
             'email' => 'required|email|max:255',
@@ -46,14 +58,7 @@ class AdminController extends Controller
         ];
         $this->validate($request,$rules,$customMassage);
 
-         if(Auth::guard('admin')->attempt($data)){
-             return redirect('admin/dashboard');
-            
-         }else{
-            Session::flash('error_message','invalid Email or Password');
-             return redirect()->back();
-             
-             }
+       
 
           }
 
@@ -65,5 +70,16 @@ class AdminController extends Controller
     public function logout(){
         Auth::guard('admin')->logout();
         return redirect('/admin');
+    }
+
+    public function chCurrentPassword(Request $request){
+      $data=$request->all();
+       echo "pre";print_r($data);die;
+       echo Auth::guard('admin')->user()->password;die;
+       if(Hash::check($data['current_pwd'], Auth::guard('admin')->user()->password)){
+           echo "true";
+       }else{
+           echo "false";
+       }
     }
 }

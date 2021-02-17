@@ -16,7 +16,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <a class="nav-link"  href="{{ url('admin/logout') }}" >
-          <i class="fas fa-th-large"></i>
+         logout
         </a>
       </li>
     </ul>
