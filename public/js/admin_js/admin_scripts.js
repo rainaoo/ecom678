@@ -78,7 +78,7 @@ $(document).ready(function(){
             url:'/admin/append-categories-level',
             data:{section_id:section_id},
             success:function(resp){
-             $("#apendCategoriesLevel").html(resp);
+             $("#appendCategoriesLevel").html(resp);
             },error:function(){
                 alert("Error");
             }

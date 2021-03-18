@@ -47,29 +47,43 @@
                     <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Name</th>
+                      <th>Section</th>
+                      <th>Parent Category</th>
+                      <th>Category</th>
                       <th>URL</th>
                       <th>Status</th>
+                      <th>Actions</th>
                       
                     </tr>
                     </thead>
                     <tbody>
                       @foreach($categories as $category)
-                    <tr>
-                      <td>{{$category->id }}</td>
-                      <td>{{$category->category_name }}</td>
-                      <td>{{$category->url }}</td>
+                        @if(!isset($category->parentcategory->category_name))
+                          <?php $parent_category="Root";?>
+                        @else
+                          <?php $parent_category=$category->parentcategory->category_name;?>
+                        @endif
+                      <tr>
+                        <td>{{$category->id }}</td>
+                        <td>{{$category->section->name }}</td>
+                        <td>{{$parent_category }}</td>
+                        <td>{{$category->category_name }}</td>
+                        <td>{{$category->url }}</td>
+                        <td>
+                      @if($category->status==1)
+                        <a class="updateCategoryStatus"  id="category-{{$category->id }}" 
+                          category_id="{{$category->id }}" href="javascript:void(0)"> Active </a>
+                      @else
+                      <a class="updateCategoryStatus"  id="category-{{$category->id }}" 
+                        category_id="{{$category->id }}" href="javascript:void(0)"> Inactive </a>
+                      @endif
+                      </td>
                       <td>
-                     @if($category->status==1)
-                       <a class="updateCategoryStatus"  id="category-{{$category->id }}" 
-                        category_id="{{$category->id }}" href="javascript:void(0)"> Active </a>
-                     @else
-                     <a class="updateCategoryStatus"  id="category-{{$category->id }}" 
-                      category_id="{{$category->id }}" href="javascript:void(0)"> Inactive </a>
-                     @endif
-                    </td>
-                      
-                    </tr>
+                        <a href="{{ url('admin/add_edit_category',$category->id)}}">Edit</a>
+                        &nbsp;&nbsp;
+                        <a href="{{ url('admin/delete-category',$category->id)}}">Delete</a>
+                      </td> 
+                      </tr>
                    @endforeach
                   </table>
                  
