@@ -102,8 +102,9 @@
                         <label for="exampleInputFile">Category Image</label>
                         <div class="input-group">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="category_image" name="category_image">
+                            <input type="file" class="custom-file-input" id="category_image" name="category_image" accept="image/*">
                             <label class="custom-file-label" for="category_image">Choose file</label>
+                               
                         </div>
                         <div class="input-group-append">
                             <span class="input-group-text">Upload</span>

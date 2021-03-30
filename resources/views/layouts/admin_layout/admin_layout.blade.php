@@ -88,6 +88,10 @@
       "responsive": true, "lengthChange": false, "autoWidth": false,
      // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#categories_wrapper .col-md-6:eq(0)');
+    $("#products").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+     // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#categories_wrapper .col-md-6:eq(0)');
     /*$('#sections').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -125,6 +129,8 @@
 <script src="{{ url('js/admin_js/pages/dashboard.js') }}"></script>
 <!-- custom admin js for password-->
 <script src="{{ url('js/admin_js/admin_scripts.js') }}"></script>
+<!-- swwet script for confirm-->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 </body>
 </html>

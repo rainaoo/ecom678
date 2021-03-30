@@ -47,12 +47,21 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         //add-edit category
         Route::match(['get','post'],'add_edit_category/{id?}','CategoryController@addEditCategory');
         Route::post('append-categories-level','CategoryController@AppendCategoriesLevel');
-
         //delete image category
         Route::get('delete-category-image/{id}','CategoryController@deletCategoryImage');
-        
-        //deletecategory
+         //deletecategory
         Route::get('delete-category/{id}','CategoryController@deletCategory');
+
+
+
+        //Products
+        Route::get('products','ProductsController@products');
+        Route::post('update-product-status','ProductsController@updateProductStatus');
+        //deleteproduct
+        Route::get('delete-product/{id}','ProductsController@deletProduct');
+        Route::match(['get','post'],'add_edit_product/{id?}','ProductsController@addEditProduct');
+
+
 
 
     });

@@ -69,6 +69,32 @@ $(document).ready(function(){
        });
     });
 
+
+     //update product status
+     $(".updateProductStatus").click(function(){
+        var status=$(this).text();
+        var product_id=$(this).attr("product_id");
+      //  alert(status);
+    //alert(section_id);
+       $.ajax({
+           type:'post',
+           url:'/admin/update-product-status',
+           data:{status:status,product_id:product_id},
+           success:function(resp){
+            // alert (resp['status']);
+            // alert (resp['section_id']);
+             if(resp['status']==0){
+                 $("#product-"+product_id).html("<a class='updateProductStatus' href='javascript:void(0)'> Inactive </a>");
+             }else if(resp['status']==1){
+                $("#product-"+product_id).html("<a class='updateProductStatus'  href='javascript:void(0)'> Active </a>");
+             }
+           },error:function(){
+               alert("error");
+           }
+       });
+    });
+
+
     //append categories level
     $('#section_id').change(function(){
         var section_id=$(this).val();
@@ -82,6 +108,37 @@ $(document).ready(function(){
             },error:function(){
                 alert("Error");
             }
-        })
-    })
+        });
+    });
+
+    //confirm delete of record
+   /*  $(".confirmDelete").click(function(){
+        var name=$(this).attr("name");
+        if(confirm("Are you sure to delet this "+name+"?")){
+            return true;
+        }
+        return false;
+    }); */
+
+    //confirm delete of weetAleart
+     $(".confirmDelete").click(function(){
+        var record=$(this).attr("record");
+        var recordid=$(this).attr("recordid");
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.value) {
+             window.location.href="/admin/delete-"+record+"/"+recordid;
+            
+            }
+          });
+    }); 
+
+
 });

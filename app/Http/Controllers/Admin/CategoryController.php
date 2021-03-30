@@ -61,14 +61,14 @@ class CategoryController extends Controller
             }
             if($request->isMethod('post')){
                 $data=$request->all();
-               //  echo "<pre>"; print_r($data); die;
+              // echo "<pre>"; print_r($data); die;
 
-              //category validation
+            //category validation
               $rules=[
                 'category_name'=>'required|regex:/^[\pL\s\-]+$/u',
                 'section_id'=>'required|numeric',
                 'url'=>'required',
-               'category_image'=>'image',
+              'category_image'=>'image'
 
 
             ];
@@ -78,27 +78,30 @@ class CategoryController extends Controller
                 'section_id.required'=>'sections is requerd',
                 'section_id.numeric'=>'sections  is required',
                 'url.required'=>'category url  is requerd',
-               'category_image.image'=>'valid image is required'
+                'category_image.image'=>'valid image is required'
 
             ];
             $this->validate($request,$rules,$customMessage);
+ 
+               //upload image
+            if($request->hasFile('category_image')){
+                $image_tmp=$request->file('category_image');
+                 var_dump($image_tmp);
+                if ($image_tmp->isValid()){
+                    //get image extention
+                    $extension=$image_tmp->getClientOriginalExtension();
+                    //generate new image name
+                    $imagName=rand(111,9999).'.'.$extension;
+                    $imagePath='images/category_images/'.$imagName;
+                    //upload the image
+                    Image::make($image_tmp)->resize('300,300')->save($imagePath);
 
-                //upload category image
-                if($request->hasFile('category_image')){
-                    $image_tmp=$request->file('category_image');
-                    if ($image_tmp->isValid()){
-                        //get image extention
-                        $extension=$image_tmp->getClientOriginalExtension();
-                        //generate new image name
-                        $imageName=rand(111,9999).'.'.$extension;
-                        $imagePath='images/category_images/'.$imageName;
-                        //upload the image
-                        Image::make($image_tmp)->resize('300,300')->save($imagePath);
-                        //save category image
-                        $category->category_image=$imageName;
-
-                    }
+                    //save category image
+                    $category->category_image=$imagName;
                 }
+               
+            }
+               
                 if(empty($data['category_dicount'])){
                     $data['category_dicount']="";
                 }
@@ -117,7 +120,7 @@ class CategoryController extends Controller
                 $category->parent_id=$data['parent_id'];
                 $category->section_id=$data['section_id'];
                 $category->category_name=$data['category_name'];
-            // $category->category_image=$data['category_image'];
+               // $category->category_image=$imagName;
                 $category->category_discount=$data['category_discount'];
                 $category->description=$data['description'];
                 $category->url=$data['url'];
@@ -128,7 +131,7 @@ class CategoryController extends Controller
                 $category->save();
 
                 Session::flash('success_message',$message);
-                return redirect('admin/categories');
+               return redirect('admin/categories');
             }
             //get all sections
             $getSections=Section::get();
